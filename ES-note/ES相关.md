@@ -1,76 +1,36 @@
-## 作用域
-使用了默认参数后，函数进行声明初始化时，参数会形成一个单独的作用域（context）。等到初始化结束，这个作用域就会消失。
+### ES6模块化使用，开发环境打包
+**基本语法**
 
-函数体内使用到参数时，如果声明中没有该参数，则会去全局变量中查找该参数
+> export 导出，可以导出多个对象，import 导入：import { fn1,fn2}
+> export default 导出一个基本对象 , import 导入基本对象： import fn
 
+**开发环境配置**
 
-```javascript
-let x = 1;
+ _babel_：让浏览器支持es6语法
 
-function f(y = x) {//参数作用域中没有x,则去全局作用域中找
-  let x = 2;
-  console.log(y);
-}
-
-f() // 1
-```
+>  node环境
+>  npm安装babel
 
 
-## 箭头函数
-1，由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错
+**JS众多模块化标准**
 
+_1,webpack_
 
-```javascript
-let getTempItem = id => ({ id: id, name: "Temp" });
-```
+> 配置webpack.config.js
+> 配置package.json中的script:start
+> 运行npm start
 
-2，如果箭头函数只有一行语句，且不需要返回值
+_2,rollup_
 
-```javascript
-let fn = () => void doesNotReturn();
-```
-3，注意事项
+> vue、react均用rollup打包
+> rollup功能单一，学习成本低，webpack功能强大，学习成本高
+_工具设计要尽量功能单一，可集成，可扩展_
 
->
->（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
-> 
-> <font size=2 color=#803df9>注
-：this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。正是因为它没有this，所以也就不能用作构造函数。</font>
->
-> <font size=2 color=#c7254e>ps： this、arguments、super、new.target在箭头函数之中都不存在的，而是指向外层函数的对应变量。</font>
-> 
->
-> （2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
-> 
-> （3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
-> 
-> （4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
+### class和构造函数的区别
 
-#### 不适用场合
-
-##### 1，定义对象的方法中不适用。
-
-因为对象不构成单独的作用域，导致jumps箭头函数定义时的作用域就是全局作用域
-
-```javascript
-const cat = {
-  lives: 9,
-  jumps: () => {
-    this.lives--;
-  }
-}
-```
-#####  2，需要动态this
-
-```javascript
-//this指向全局对象
-button.addEventListener('click', () => {
-  this.classList.toggle('on');
-});
-```
-
-
-
-
-
-
+> class在语法上更加贴合面向对象的写法
+> class实现继承更加易读、易理解
+> 更易于java等后端语言的使用
+> 本质还是语法糖，使用prototype
+### Promise的基本使用和原理
+### ES6的其他常用功能
