@@ -33,4 +33,61 @@ _工具设计要尽量功能单一，可集成，可扩展_
 > 更易于java等后端语言的使用
 > 本质还是语法糖，使用prototype
 ### Promise的基本使用和原理
+#### 基本用法
+> new Promise实例，并return
+> 
+> new Promise 时传入函数，函数参数为resolve，reject。成功时执行resolve(),失败时执行reject()
+> 
+> then监听结果
+
+
+```JavaScript
+const promise = new Promise(function(resolve, reject) {
+  // ... some code
+  if (/* 异步操作成功 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+
+promise.then(function(value) {
+  // success
+}, function(error) {
+  // failure
+});
+```
+#### 封装使用
+```JavaScript
+function loadImg(src){
+    const promise = new Promise(function(resolve, reject) {
+      // ... some code
+      var img = document.createElement('img')
+      img.onload = function () {
+        resolve(img);
+      } else {
+        reject();
+      }
+      img.src = src
+    })
+    return promise
+}
+
+var result = loadImg('src')
+result.then(function(value) {
+  // success
+}, function(error) {
+  // failure
+});
+```
+
+## ES6的其他常用功能
+
+> 1. let定义变量，const定义常亮
+> 1. 多行字符串/模板字符串：`` / ${}
+> 1. 解构赋值
+> 1. 块级作用域
+> 1. 函数默认参数
+> 1. 箭头函数
+
 ### ES6的其他常用功能
